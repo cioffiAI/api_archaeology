@@ -1,7 +1,7 @@
 # Paper
 
-This directory is reserved for the Phase 3 mini-paper:
+Questa cartella è riservata per il mini-paper della Fase 3:
 
-`The price of information asymmetry`
+`Il prezzo dell'asimmetria informativa`
 
-No draft has been added yet.
+Nessuna bozza è ancora stata aggiunta.

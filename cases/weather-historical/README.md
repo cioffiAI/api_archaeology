@@ -1,8 +1,8 @@
-# Weather Historical Case Study
+# Case Study Meteo Storico
 
-## Status
-Placeholder only.
+## Stato
+Solo placeholder.
 
-This case is planned for Phase 2. The intended pattern is a time-series endpoint behind a restrictive UI, ideally from a public or quasi-public source such as a regional environmental agency.
+Questo caso è pianificato per la Fase 2. Il pattern previsto è un endpoint di serie temporali dietro un'interfaccia restrittiva, idealmente da una fonte pubblica o quasi-pubblica come un'agenzia ambientale regionale.
 
-No target has been finalized in this repository yet.
+Nessun target è stato ancora finalizzato in questo repository.

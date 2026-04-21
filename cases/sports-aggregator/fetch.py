@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import sys
 import time
 import urllib.parse
 import urllib.robotparser
@@ -14,8 +15,8 @@ DEFAULT_DELAY_SECONDS = MIN_DELAY_SECONDS
 CONTACT_EMAIL = os.getenv("API_ARCHAEOLOGY_CONTACT_EMAIL", "set-contact-email@example.com")
 USER_AGENT = (
     "ApiArchaeology/1.0 "
-    "(educational; +github.com/<user>/api-archaeology; "
-    f"contact={CONTACT_EMAIL})"
+    "(educational; +github.com/<cioffiAI>/api-archaeology; "
+    f"contact={'cioffi.antonio2004@gmail.com'})"
 )
 
 
@@ -43,19 +44,25 @@ def enforce_delay(delay_seconds: float = DEFAULT_DELAY_SECONDS) -> None:
     time.sleep(delay_seconds)
 
 
-def fetch_placeholder() -> None:
-    raise NotImplementedError(
-        "Endpoint not characterized yet. Use DevTools first, document the target, "
-        "then replace this placeholder with the minimal reproducible request flow."
+def fail_closed() -> None:
+    raise RuntimeError(
+        "Sports case study scaffold: no live endpoint is configured in this "
+        "repository. Public materials stay generic and omit target-specific "
+        "request details. Any future implementation must also stay outside "
+        "robots.txt-disallowed paths."
     )
 
 
 def main() -> None:
-    print("Sports aggregator scaffold only.")
-    print("No real endpoint is configured yet.")
+    print("Sports aggregator case study is currently a scaffold.")
+    print("No live target is configured in this repository.")
     print(f"Default User-Agent: {USER_AGENT}")
     print(f"Default delay: {DEFAULT_DELAY_SECONDS} seconds")
-    fetch_placeholder()
+    try:
+        fail_closed()
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        raise SystemExit(1) from exc
 
 
 if __name__ == "__main__":

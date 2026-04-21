@@ -1,5 +1,5 @@
 # Tool
 
-This directory is reserved for the optional Phase 3 CLI helper.
+Questa cartella è riservata per l'helper CLI opzionale della Fase 3.
 
-No implementation has been added yet.
+Nessuna implementazione è ancora stata aggiunta.

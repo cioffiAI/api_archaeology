@@ -1,56 +1,56 @@
-# Ethics and Scope Policy
+# Etica e Politica di Ambito
 
-This repository documents a technique for accessing data through websites' own internal APIs. That technique is legitimate for a narrow set of uses and inappropriate for others. This document defines the boundary and the operational rules that apply to every case study in this repository.
+Questo repository documenta una tecnica per accedere ai dati attraverso le API interne dei siti web. Tale tecnica è legittima per un insieme ristretto di usi e inappropriata per altri. Questo documento definisce il confine e le regole operative che si applicano a ogni case study in questo repository.
 
-## Intended use
-This repository is educational. Appropriate uses include:
-- personal research
-- academic study
-- journalism based on public data
-- one-off analyses
-- learning how modern web applications expose their data
+## Uso previsto
+Questo repository è educativo. Gli usi appropriati includono:
+- ricerca personale
+- studio accademico
+- giornalismo basato su dati pubblici
+- analisi occasionali
+- apprendimento di come le applicazioni web moderne espongono i loro dati
 
-Inappropriate uses include:
-- building a commercial service on undocumented endpoints
-- mass-downloading content for redistribution
-- circumventing paid tiers that provide genuine value
-- targeting sites that explicitly prohibit automated access
+Usi inappropriati includono:
+- costruire un servizio commerciale su endpoint non documentati
+- scaricare in massa contenuti per redistribuzione
+- eludere tier a pagamento che forniscono valore genuino
+- targetizzare siti che proibiscono esplicitamente l'accesso automatizzato
 
-## Operational rules
-Every script in this repository should enforce the following defaults:
+## Regole operative
+Ogni script in questo repository deve applicare i seguenti default:
 
 ### Rate limiting
-- minimum delay of 2 seconds between requests to the same host
-- default of 5 seconds for smaller or institutional hosts
-- scripts must reject values below 1 second
+- ritardo minimo di 2 secondi tra richieste allo stesso host
+- default di 5 secondi per host più piccoli o istituzionali
+- gli script devono rifiutare valori sotto 1 secondo
 
 ### User-Agent
-Requests must identify themselves honestly, with a format equivalent to:
+Le richieste devono identificarsi onestamente, con un formato equivalente a:
 
 `ApiArchaeology/1.0 (educational; +github.com/<user>/api-archaeology)`
 
-A contact email should be configurable through environment variable.
+Un'email di contatto deve essere configurabile tramite variabile d'ambiente.
 
 ### robots.txt
-Scripts should read `robots.txt` before running and skip explicitly disallowed paths for general crawlers.
+Gli script devono leggere `robots.txt` prima di eseguire e saltare i path esplicitamente disallow per crawler generali.
 
-### Data handling
-- no raw dataset redistribution in the repository
-- only small demonstration samples belong in version control
-- no authentication bypass
+### Gestione dei dati
+- nessuna redistribuzione di raw dataset nel repository
+- solo piccoli campioni dimostrativi appartengono al version control
+- nessun bypass di autenticazione
 
-If a target later introduces authentication, the relevant case study should be updated and the code removed or clearly marked non-functional.
+Se un target introduce successivamente autenticazione, il case study rilevante deve essere aggiornato e il codice rimosso o chiaramente marcato come non funzionante.
 
-## Terms of service
-Each case study should cite the site's ToS as observed at the time of the study and explain why the specific educational, rate-limited and non-redistributive use is or is not compatible.
+## Termini di servizio
+Ogni case study deve citare i ToS del sito come osservati al momento dello studio e spiegare perché l'uso specifico educativo, rate-limited e non-redistributivo è o non è compatibile.
 
-Where the ToS is ambiguous, the ambiguity must be stated. Where it is clearly prohibitive, the case study should not be included.
+Dove i ToS sono ambigui, l'ambiguità deve essere dichiarata. Dove sono chiaramente prohibitivi, il case study non deve essere incluso.
 
-## Removal requests
-If a site operator asks for a case study to be modified or removed, the default response is compliance within one week. Technical argument is usually cheap; reputational cost is not.
+## Richieste di rimozione
+Se un operatore del sito chiede che un case study sia modificato o rimosso, la risposta default è compliance entro una settimana. L'argomento tecnico è solitamente cheap; il costo di reputazione non lo è.
 
-## Liability
-Users are responsible for ensuring that any real-world use complies with applicable law and with the terms of service of the target site. This repository does not endorse derivative uses that exceed the educational scope described here.
+## Responsabilità
+Gli utenti sono responsabili di assicurare che qualsiasi uso reale rispetti la legge applicabile e i termini di servizio del sito target. Questo repository non endorsea usi derivati che eccedano l'ambito educativo qui descritto.
 
-## One rule
-If you would be uncomfortable explaining the exact workflow to the site operator, stop. The goal is a method that remains technically clear and ethically defensible.
+## Una regola sola
+Se ti sentiresti a disagio a spiegare il workflow esatto all'operatore del sito, fermati. L'obiettivo è un metodo che rimane tecnicamente chiaro ed eticamente difendibile.

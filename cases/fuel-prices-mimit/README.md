@@ -1,8 +1,8 @@
-# Fuel Prices MIMIT Case Study
+# Case Study Prezzi Carburanti MIMIT
 
-## Status
-Placeholder only.
+## Stato
+Solo placeholder.
 
-This case is planned for Phase 2. The intended pattern is open data already published but obscured by the main site interface.
+Questo caso è pianificato per la Fase 2. Il pattern previsto è dati aperti già pubblicati ma oscurati dall'interfaccia principale del sito.
 
-The expected public source is the MIMIT fuel price observatory ecosystem.
+La sorgente pubblica attesa è l'ecosistema dell'osservatorio prezzi carburanti del MIMIT.

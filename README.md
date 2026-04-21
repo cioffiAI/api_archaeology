@@ -1,45 +1,45 @@
 # api-archaeology
 
-Finding the APIs behind the websites that pretend they do not have one.
+Trovare le API dietro i siti web che fingono di non averne una.
 
-## The thesis
-For many categories of data, the paid market exists largely because of information asymmetry. The public source already exists, for free, if you know where to look, and where to look is a skill that can be taught.
+## La tesi
+Per molte categorie di dati, il mercato a pagamento esiste in larga parte per asimmetria informativa. La fonte pubblica esiste già, gratis, se sai dove guardare, e dove guardare è un'abilità che può essere insegnata.
 
-This repository documents a method for identifying undocumented HTTP endpoints behind data-heavy websites, with three case studies across unrelated domains:
-- sports data
-- historical weather
-- fuel prices
+Questo repository documenta un metodo per identificare endpoint HTTP non documentati dietro siti web ricchi di dati, con tre case study in domini non correlati:
+- dati sportivi
+- dati meteo storici
+- prezzi carburanti
 
-The method is in `METHOD.md`. The ethical and operational constraints are in `ETHICS.md`.
+Il metodo è in `METHOD.md`. I vincoli etici e operativi sono in `ETHICS.md`.
 
-## Why this matters
-Most modern data-heavy websites are thin clients on top of their own backend APIs. The browser calls those APIs to render the UI. If the data is public and the site does not actively defend the endpoint, the interesting work is not HTML scraping. The interesting work is recognizing which backend calls matter, characterizing them correctly, and deciding when reuse is legitimate.
+## Perché conta
+La maggior parte dei siti web moderni ricchi di dati sono thin client sopra i loro stessi backend API. Il browser chiama quelle API per renderizzare l'interfaccia. Se i dati sono pubblici e il sito non difende attivamente l'endpoint, il lavoro interessante non è lo HTML scraping. Il lavoro interessante è riconoscere quali chiamate backend contano, caratterizzarle correttamente, e decidere quando il riutilizzo è legittimo.
 
-This repo is about that recognition step. It is not a scraping framework and it is not a bypass tool.
+Questo repo riguarda quel passo di riconoscimento. Non è un framework di scraping e non è un tool di bypass.
 
-## Repository structure
-- `METHOD.md`: domain-agnostic methodology in four phases
-- `ETHICS.md`: scope, rate limiting, robots.txt, ToS and removal policy
-- `cases/sports-aggregator/`: first case study scaffold
-- `cases/weather-historical/`: second case study placeholder
-- `cases/fuel-prices-mimit/`: third case study placeholder
-- `paper/`: mini-paper output planned for Phase 3
+## Struttura del repository
+- `METHOD.md`: metodologia domain-agnostic in quattro fasi
+- `ETHICS.md`: ambito, rate limiting, robots.txt, ToS e politica di rimozione
+- `cases/sports-aggregator/`: scaffold del primo case study
+- `cases/weather-historical/`: placeholder del secondo case study
+- `cases/fuel-prices-mimit/`: placeholder del terzo case study
+- `paper/`: output del mini-paper pianificato per la Fase 3
 
 ## Case studies
 ### `cases/sports-aggregator/`
-Pattern: semantically filtered tabular endpoints.
+Pattern: endpoint tabulari con filtro semantico.
 
-This is the entry-level case because it is the most common and most didactic pattern. In the public repo, the target is intentionally framed generically and does not expose the original site name or live endpoint details.
+Questo è il caso entry-level perché è il pattern più comune e più didattico. Nel repo pubblico, il target è intenzionalmente formulato in modo generico e non espone il nome del sito originale o dettagli endpoint live.
 
 ### `cases/weather-historical/`
-Pattern: time-series endpoints behind a restrictive UI.
+Pattern: endpoint di serie temporali dietro un'interfaccia restrittiva.
 
-The likely target class is a regional environmental agency or comparable public-source portal.
+La classe di target probabile è un'agenzia ambientale regionale o un portale equivalente di fonte pubblica.
 
 ### `cases/fuel-prices-mimit/`
-Pattern: open data already published, but obscured by the main UI.
+Pattern: dati aperti già pubblicati, ma oscurati dall'interfaccia principale.
 
-This case focuses on the Italian fuel price observatory data published under the MIMIT ecosystem.
+Questo caso si concentra sui dati dell'osservatorio prezzi carburanti italiano pubblicati sotto l'ecosistema MIMIT.
 
 ## Quickstart
 ```bash
@@ -48,18 +48,18 @@ uv sync
 python cases/sports-aggregator/fetch.py
 ```
 
-The current `fetch.py` is intentionally a scaffold. It enforces policy defaults and stops before targeting any real endpoint.
+L'attuale `fetch.py` è intenzionalmente uno scaffold. Applica i default di policy e si ferma prima di targetizzare qualsiasi endpoint reale.
 
-## Ethics and scope
-This repository is educational. Scripts must use conservative rate limits, an identifying User-Agent, and no authentication bypass. Raw datasets are not redistributed here. Only small demonstration samples belong in the repo.
+## Etica e ambito
+Questo repository è educativo. Gli script devono usare rate limit conservativi, un User-Agent identificabile, e nessun bypass di autenticazione. I raw dataset non sono redistribuiti qui. Solo piccoli campioni dimostrativi appartengono al repo.
 
-If you represent one of the documented targets and want a case study modified or removed, the policy in `ETHICS.md` applies.
+Se rappresenti uno dei target documentati e vuoi che un case study sia modificato o rimosso, la policy in `ETHICS.md` si applica.
 
-## Current status
-Phase 1 is in progress:
-- repo scaffold created
-- method and ethics documents created
-- first case study scaffold created
-- endpoint characterization still missing
+## Stato attuale
+La Fase 1 è in corso:
+- scaffold del repo creato
+- documenti di metodo ed etica creati
+- scaffold del primo case study creato
+- caratterizzazione dell'endpoint ancora mancante
 
-The next real work is not more scaffolding. It is one complete case study with reproducible observations.
+Il prossimo lavoro reale non è più scaffolding. È un case study completo con osservazioni riproducibili.
