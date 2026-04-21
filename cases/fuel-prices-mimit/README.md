@@ -6,9 +6,11 @@ This case study demonstrates the "API Archaeology" pattern: extracting structure
 ## Data Source
 - **Source**: Ministero delle Imprese e del Made in Italy (MIMIT)
 - **Data Type**: Daily fuel prices and station registry.
-- **Current URL**: [https://www.mimit.gov.it/it/prezzo-medio-carburanti](https://www.mimit.gov.it/it/prezzo-medio-carburanti)
-- **Direct Data Endpoint**: `https://www.mimit.gov.it/images/exportCSV/prezzo_alle_8.csv`
-- **License**: The data is available for free reuse under the **IODL 2.0 (Licenza Aperta dei Dati Pubblici)**.
+- **Open data page**: [https://www.mimit.gov.it/it/open-data/elenco-dataset/carburanti-prezzi-praticati-e-anagrafica-degli-impianti](https://www.mimit.gov.it/it/open-data/elenco-dataset/carburanti-prezzi-praticati-e-anagrafica-degli-impianti)
+- **Daily prices CSV**: `https://www.mimit.gov.it/images/exportCSV/prezzo_alle_8.csv`
+- **Station registry CSV**: `https://www.mimit.gov.it/images/exportCSV/anagrafica_impianti_attivi.csv`
+- **Legal basis**: Art. 51 L. 99/2009 — gestori dei distributori comunicano i prezzi al Ministero
+- **Licence**: [IODL 2.0](http://www.dati.gov.it/iodl/2.0/) — libero riuso con attribuzione
 
 ## Technical Implementation
 
@@ -34,13 +36,13 @@ The source CSV files use a non-standard format:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/antonio-cioffi/api-archaeology.git
-   cd api-archaeology/cases/fuel-prices-mimit
+   git clone https://github.com/cioffiAI/api_archaeology.git
+   cd api_archaeology/cases/fuel-prices-mimit
    ```
 
 2. **Install dependencies**:
    ```bash
-   pip install httpx pydantic
+   uv sync
    ```
 
 3. **Run the fetcher**:
