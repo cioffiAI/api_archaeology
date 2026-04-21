@@ -1,0 +1,14 @@
+[project]
+name = "api-archaeology"
+version = "0.1.0"
+description = "Educational repository for documenting API archaeology case studies."
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.27.0",
+    "pydantic>=2.8.0",
+    "selectolax>=0.3.21",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
