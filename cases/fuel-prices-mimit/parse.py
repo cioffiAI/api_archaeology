@@ -1,64 +1,68 @@
+from __future__ import annotations
+
 import csv
-from typing import List
-from pydantic import BaseModel, field_validator
-from pathlib import Path
+import io
+
+from pydantic import BaseModel
+
 
 class FuelPrice(BaseModel):
-    station_id: str
+    station_id: int
     fuel_description: str
     price: float
-    is_self: str
-    date: str
+    is_self_service: bool
+    reported_at: str
 
-    @field_validator("price", mode="before")
-    @classmethod
-    def parse_price(cls, v):
-        if isinstance(v, str):
-            # Replace comma with dot for float conversion
-            v = v.replace(",", ".")
-        return float(v)
 
 class FuelStation(BaseModel):
-    station_id: str
+    station_id: int
+    manager: str
+    brand: str
+    station_type: str
     name: str
     address: str
-    city: str
+    municipality: str
     province: str
+    latitude: float
+    longitude: float
 
-def _skip_metadata(file_obj):
-    """Skips the first line (metadata) of the file."""
-    file_obj.readline()
 
-def parse_prices(file_path: str) -> List[FuelPrice]:
-    prices = []
-    with open(file_path, "r", encoding="utf-8") as f:
-        _skip_metadata(f)
-        reader = csv.DictReader(f, delimiter="|")
-        for row in reader:
-            prices.append(
-                FuelPrice(
-                    station_id=row["idImpianto"],
-                    fuel_description=row["descCarburante"],
-                    price=row["prezzo"],
-                    is_self=row["isSelf"],
-                    date=row["dtComu"],
-                )
-            )
-    return prices
+def _skip_metadata(content: str) -> str:
+    """Strip the first 'Estrazione del ...' line that MIMIT prepends to every export."""
+    lines = content.splitlines(keepends=True)
+    if lines and lines[0].startswith("Estrazione"):
+        return "".join(lines[1:])
+    return content
 
-def parse_stations(file_path: str) -> List[FuelStation]:
-    stations = []
-    with open(file_path, "r", encoding="utf-8") as f:
-        _skip_metadata(f)
-        reader = csv.DictReader(f, delimiter="|")
-        for row in reader:
-            stations.append(
-                FuelStation(
-                    station_id=row["idImpianto"],
-                    name=row["descImpianto"],
-                    address=row["indirizzo"],
-                    city=row["comune"],
-                    province=row["provincia"],
-                )
-            )
-    return stations
+
+def parse_prices(content: str) -> list[FuelPrice]:
+    reader = csv.DictReader(io.StringIO(_skip_metadata(content)), delimiter="|")
+    records = []
+    for row in reader:
+        records.append(FuelPrice(
+            station_id=int(row["idImpianto"]),
+            fuel_description=row["descCarburante"].strip(),
+            price=float(row["prezzo"].replace(",", ".")),
+            is_self_service=row["isSelf"].strip() == "1",
+            reported_at=row["dtComu"].strip(),
+        ))
+    return records
+
+
+def parse_stations(content: str) -> list[FuelStation]:
+    reader = csv.DictReader(io.StringIO(_skip_metadata(content)), delimiter="|")
+    records = []
+    for row in reader:
+        records.append(FuelStation(
+            station_id=int(row["idImpianto"]),
+            manager=row["Gestore"].strip(),
+            brand=row["Bandiera"].strip(),
+            station_type=row["Tipo Impianto"].strip(),
+            name=row["Nome Impianto"].strip(),
+            address=row["Indirizzo"].strip(),
+            municipality=row["Comune"].strip(),
+            province=row["Provincia"].strip(),
+            latitude=float(row["Latitudine"].replace(",", ".")),
+            longitude=float(row["Longitudine"].replace(",", ".")),
+        ))
+    return records

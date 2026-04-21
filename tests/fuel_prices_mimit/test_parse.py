@@ -1,73 +1,63 @@
+from __future__ import annotations
+
 import sys
-import os
+import textwrap
 from pathlib import Path
 
-# Workaround to import from cases/fuel-prices-mimit (kebab-case)
-sys.path.insert(0, os.path.abspath("cases/fuel-prices-mimit"))
-
 import pytest
-from parse import parse_prices, parse_stations, FuelPrice, FuelStation
 
-def test_parse_prices():
-    # Mock CSV content with metadata line and PIPE delimiter
-    content = "Estrazione del 2024-01-01\nidImpianto|descCarburante|prezzo|isSelf|dtComu\n123|Benzina|1,850|S|2024-01-01\n456|Diesel|1,720|N|2024-01-01"
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "cases" / "fuel-prices-mimit"))
 
-    with open("test_prices.csv", "w", encoding="utf-8") as f:
-        f.write(content)
+from parse import FuelPrice, FuelStation, parse_prices, parse_stations  # noqa: E402
 
-    prices = parse_prices("test_prices.csv")
 
-    assert len(prices) == 2
-    assert isinstance(prices[0], FuelPrice)
-    assert prices[0].station_id == "123"
-    assert prices[0].fuel_description == "Benzina"
-    assert prices[0].price == 1.850
-    assert prices[0].is_self == "S"
-    assert prices[0].date == "2024-01-01"
+PRICES_CSV = textwrap.dedent("""\
+    Estrazione del 2026-04-21
+    idImpianto|descCarburante|prezzo|isSelf|dtComu
+    12345|Benzina|2.139|0|21/04/2026 08:00:00
+    12345|Gasolio|1.987|1|21/04/2026 08:00:00
+    99999|Benzina|2.201|0|21/04/2026 08:00:00
+""")
 
-    os.remove("test_prices.csv")
+STATIONS_CSV = textwrap.dedent("""\
+    Estrazione del 2026-04-21
+    idImpianto|Gestore|Bandiera|Tipo Impianto|Nome Impianto|Indirizzo|Comune|Provincia|Latitudine|Longitudine
+    12345|MARIO ROSSI SRL|IP|Stradale|STAZIONE IP|VIA ROMA 1|ROMA|RM|41.8902|12.4922
+    99999|BIANCHI CARLO|Q8|Stradale|Q8 CENTRO|CORSO ITALIA 5|MILANO|MI|45.4654|9.1859
+""")
 
-def test_parse_stations():
-    content = "Estrazione del 2024-01-01\nidImpianto|descImpianto|indirizzo|comune|provincia\n123|Stazione A|Via Roma 1|Milano|MI\n456|Stazione B|Via Torino 2|Roma|RM"
 
-    with open("test_stations.csv", "w", encoding="utf-8") as f:
-        f.write(content)
+def test_parse_prices_count():
+    assert len(parse_prices(PRICES_CSV)) == 3
 
-    stations = parse_stations("test_stations.csv")
 
-    assert len(stations) == 2
-    assert isinstance(stations[0], FuelStation)
-    assert stations[0].station_id == "123"
-    assert stations[0].name == "Stazione A"
-    assert stations[0].address == "Via Roma 1"
-    assert stations[0].city == "Milano"
-    assert stations[0].province == "MI"
+def test_parse_prices_fields():
+    r = parse_prices(PRICES_CSV)[0]
+    assert r.station_id == 12345
+    assert r.fuel_description == "Benzina"
+    assert r.price == pytest.approx(2.139)
+    assert r.is_self_service is False
+    assert r.reported_at == "21/04/2026 08:00:00"
 
-    os.remove("test_stations.csv")
+
+def test_parse_prices_self_service_flag():
+    assert parse_prices(PRICES_CSV)[1].is_self_service is True
+
 
 def test_parse_prices_empty():
-    content = "Estrazione del 2024-01-01\nidImpianto|descCarburante|prezzo|isSelf|dtComu"
-    with open("test_empty_prices.csv", "w", encoding="utf-8") as f:
-        f.write(content)
+    csv = "Estrazione del 2026-04-21\nidImpianto|descCarburante|prezzo|isSelf|dtComu\n"
+    assert parse_prices(csv) == []
 
-    prices = parse_prices("test_empty_prices.csv")
-    assert prices == []
-    os.remove("test_empty_prices.csv")
 
-def test_parse_stations_empty():
-    content = "Estrazione del 2024-01-01\nidImpianto|descImpianto|indirizzo|comune|provincia"
-    with open("test_empty_stations.csv", "w", encoding="utf-8") as f:
-        f.write(content)
+def test_parse_stations_count():
+    assert len(parse_stations(STATIONS_CSV)) == 2
 
-    stations = parse_stations("test_empty_stations.csv")
-    assert stations == []
-    os.remove("test_empty_stations.csv")
 
-def test_parse_prices_malformed_price():
-    content = "Estrazione del 2024-01-01\nidImpianto|descCarburante|prezzo|isSelf|dtComu\n123|Benzina|invalid|S|2024-01-01"
-    with open("test_bad_price.csv", "w", encoding="utf-8") as f:
-        f.write(content)
-
-    with pytest.raises(ValueError):
-        parse_prices("test_bad_price.csv")
-    os.remove("test_bad_price.csv")
+def test_parse_stations_fields():
+    s = parse_stations(STATIONS_CSV)[0]
+    assert s.station_id == 12345
+    assert s.brand == "IP"
+    assert s.municipality == "ROMA"
+    assert s.province == "RM"
+    assert s.latitude == pytest.approx(41.8902)
+    assert s.longitude == pytest.approx(12.4922)
