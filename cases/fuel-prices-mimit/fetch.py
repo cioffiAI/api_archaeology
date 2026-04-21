@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import List
 
 import httpx
-from cases.fuel_prices_mimit.parse import FuelPrice, parse_prices
+from parse import FuelPrice, parse_prices
 
 # Configuration
 PRICES_URL = "https://www.mimit.gov.it/images/exportCSV/prezzo_alle_8.csv"
@@ -16,7 +16,7 @@ REPO_URL = "https://github.com/antonio-cioffi/api-archaeology"
 USER_AGENT = f"api-archaeology-crawler (contact: {CONTACT_EMAIL}, repo: {REPO_URL})"
 
 def _build_client() -> httpx.Client:
-    \"\"\"Returns an httpx Client with the configured User-Agent and timeout.\"\"\"
+    """Returns an httpx Client with the configured User-Agent and timeout."""
     return httpx.Client(
         headers={"User-Agent": USER_AGENT},
         follow_redirects=True,
@@ -24,7 +24,7 @@ def _build_client() -> httpx.Client:
     )
 
 def _check_robots(client: httpx.Client):
-    \"\"\"Checks robots.txt to see if downloading the prices CSV is allowed.\"\"\"
+    """Checks robots.txt to see if downloading the prices CSV is allowed."""
     rp = urllib.robotparser.RobotFileParser()
     try:
         response = client.get(ROBOTS_URL)
@@ -39,7 +39,7 @@ def _check_robots(client: httpx.Client):
         raise RuntimeError(f"Access to {PRICES_URL} is forbidden by robots.txt")
 
 def _fetch_csv(client: httpx.Client) -> str:
-    \"\"\"Downloads the CSV and handles encoding."""\"\"\"
+    """Downloads the CSV and handles encoding."""
     response = client.get(PRICES_URL)
     response.raise_for_status()
 
@@ -50,7 +50,7 @@ def _fetch_csv(client: httpx.Client) -> str:
         return content.decode("windows-1252")
 
 def _write_sample(prices: List[FuelPrice], output_path: str = "sample.csv"):
-    \"\"\"Writes the first 20 prices to a sample CSV file.\"\"\"
+    """Writes the first 20 prices to a sample CSV file."""
     sample = prices[:20]
     if not sample:
         print("No prices to write to sample.")
