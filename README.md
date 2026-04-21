@@ -56,10 +56,11 @@ Questo repository è educativo. Gli script devono usare rate limit conservativi,
 Se rappresenti uno dei target documentati e vuoi che un case study sia modificato o rimosso, la policy in `ETHICS.md` si applica.
 
 ## Stato attuale
-La Fase 1 è in corso:
+La Fase 1 è completata:
 - scaffold del repo creato
 - documenti di metodo ed etica creati
-- scaffold del primo case study creato
-- caratterizzazione dell'endpoint ancora mancante
+- primo case study completo: `cases/fuel-prices-mimit/`
 
-Il prossimo lavoro reale non è più scaffolding. È un case study completo con osservazioni riproducibili.
+Il case study `cases/sports-aggregator/` rimane uno scaffold in attesa di
+caratterizzazione pubblica riproducibile (vedi README interno).
+Il case study `cases/weather-historical/` è pianificato per la Fase 2.
