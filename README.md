@@ -21,8 +21,8 @@ Questo repo riguarda quel passo di riconoscimento. Non è un framework di scrapi
 - `METHOD.md`: metodologia domain-agnostic in quattro fasi
 - `ETHICS.md`: ambito, rate limiting, robots.txt, ToS e politica di rimozione
 - `cases/sports-aggregator/`: scaffold del primo case study
-- `cases/weather-historical/`: placeholder del secondo case study
-- `cases/fuel-prices-mimit/`: placeholder del terzo case study
+- `cases/weather-historical/`: secondo case study completo (ARPAE Emilia-Romagna)
+- `cases/fuel-prices-mimit/`: terzo case study completo (MIMIT osservatorio carburanti)
 - `paper/`: output del mini-paper pianificato per la Fase 3
 
 ## Case studies
@@ -32,9 +32,9 @@ Pattern: endpoint tabulari con filtro semantico.
 Questo è il caso entry-level perché è il pattern più comune e più didattico. Nel repo pubblico, il target è intenzionalmente formulato in modo generico e non espone il nome del sito originale o dettagli endpoint live.
 
 ### `cases/weather-historical/`
-Pattern: endpoint di serie temporali dietro un'interfaccia restrittiva.
+Pattern: archivio storico strutturato — directory listing + file mensili compressi NDJSON.
 
-La classe di target probabile è un'agenzia ambientale regionale o un portale equivalente di fonte pubblica.
+ARPAE Emilia-Romagna pubblica 20 anni di osservazioni meteorologiche (2006–2026) come archivi mensili `.json.gz`, ciascuno contenente letture di stazioni a cadenza 15 minuti. Il parsing richiede la decodifica di variabili BUFR e la conversione di coordinate Gauss-Boaga.
 
 ### `cases/fuel-prices-mimit/`
 Pattern: dati aperti già pubblicati, ma oscurati dall'interfaccia principale.
@@ -56,11 +56,11 @@ Questo repository è educativo. Gli script devono usare rate limit conservativi,
 Se rappresenti uno dei target documentati e vuoi che un case study sia modificato o rimosso, la policy in `ETHICS.md` si applica.
 
 ## Stato attuale
-La Fase 1 è completata:
+La Fase 2 è completata:
 - scaffold del repo creato
 - documenti di metodo ed etica creati
-- primo case study completo: `cases/fuel-prices-mimit/`
+- `cases/fuel-prices-mimit/`: completo
+- `cases/weather-historical/`: completo
 
 Il case study `cases/sports-aggregator/` rimane uno scaffold in attesa di
 caratterizzazione pubblica riproducibile (vedi README interno).
-Il case study `cases/weather-historical/` è pianificato per la Fase 2.
