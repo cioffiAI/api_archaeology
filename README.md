@@ -5,8 +5,7 @@ Trovare le API dietro i siti web che fingono di non averne una.
 ## La tesi
 Per molte categorie di dati, il mercato a pagamento esiste in larga parte per asimmetria informativa. La fonte pubblica esiste già, gratis, se sai dove guardare, e dove guardare è un'abilità che può essere insegnata.
 
-Questo repository documenta un metodo per identificare endpoint HTTP non documentati dietro siti web ricchi di dati, con tre case study in domini non correlati:
-- dati sportivi
+Questo repository documenta un metodo per identificare endpoint HTTP non documentati dietro siti web ricchi di dati, con due case study in domini non correlati:
 - dati meteo storici
 - prezzi carburanti
 
@@ -20,17 +19,11 @@ Questo repo riguarda quel passo di riconoscimento. Non è un framework di scrapi
 ## Struttura del repository
 - `METHOD.md`: metodologia domain-agnostic in quattro fasi
 - `ETHICS.md`: ambito, rate limiting, robots.txt, ToS e politica di rimozione
-- `cases/sports-aggregator/`: scaffold del primo case study
-- `cases/weather-historical/`: secondo case study completo (ARPAE Emilia-Romagna)
-- `cases/fuel-prices-mimit/`: terzo case study completo (MIMIT osservatorio carburanti)
+- `cases/weather-historical/`: primo case study completo (ARPAE Emilia-Romagna)
+- `cases/fuel-prices-mimit/`: secondo case study completo (MIMIT osservatorio carburanti)
 - `paper/`: output del mini-paper pianificato per la Fase 3
 
 ## Case studies
-### `cases/sports-aggregator/`
-Pattern: endpoint tabulari con filtro semantico.
-
-Questo è il caso entry-level perché è il pattern più comune e più didattico. Nel repo pubblico, il target è intenzionalmente formulato in modo generico e non espone il nome del sito originale o dettagli endpoint live.
-
 ### `cases/weather-historical/`
 Pattern: archivio storico strutturato — directory listing + file mensili compressi NDJSON.
 
@@ -45,10 +38,10 @@ Questo caso si concentra sui dati dell'osservatorio prezzi carburanti italiano p
 ```bash
 uv venv
 uv sync
-python cases/sports-aggregator/fetch.py
+python cases/fuel-prices-mimit/fetch.py
 ```
 
-L'attuale `fetch.py` è intenzionalmente uno scaffold. Applica i default di policy e si ferma prima di targetizzare qualsiasi endpoint reale.
+Il caso MIMIT è il punto di partenza consigliato: dati aperti, CSV strutturato, nessuna complessità di parsing.
 
 ## Etica e ambito
 Questo repository è educativo. Gli script devono usare rate limit conservativi, un User-Agent identificabile, e nessun bypass di autenticazione. I raw dataset non sono redistribuiti qui. Solo piccoli campioni dimostrativi appartengono al repo.
@@ -56,11 +49,6 @@ Questo repository è educativo. Gli script devono usare rate limit conservativi,
 Se rappresenti uno dei target documentati e vuoi che un case study sia modificato o rimosso, la policy in `ETHICS.md` si applica.
 
 ## Stato attuale
-La Fase 2 è completata:
-- scaffold del repo creato
-- documenti di metodo ed etica creati
+Due case study completi:
 - `cases/fuel-prices-mimit/`: completo
 - `cases/weather-historical/`: completo
-
-Il case study `cases/sports-aggregator/` rimane uno scaffold in attesa di
-caratterizzazione pubblica riproducibile (vedi README interno).

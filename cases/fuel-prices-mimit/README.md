@@ -36,8 +36,8 @@ The source CSV files use a non-standard format:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/cioffiAI/api_archaeology.git
-   cd api_archaeology/cases/fuel-prices-mimit
+   git clone https://github.com/cioffiAI/api-archaeology.git
+   cd api-archaeology/cases/fuel-prices-mimit
    ```
 
 2. **Install dependencies**:
