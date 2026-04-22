@@ -13,3 +13,7 @@ build/
 .env
 # Full MIMIT CSV downloads — only sample.csv belongs in the repo
 cases/fuel-prices-mimit/csv mimit/
+documenti_api_archaeology.pdf
+method_ethics_api_archaeology.pdf
+piano_api_archaeology.pdf
+sample.csv
